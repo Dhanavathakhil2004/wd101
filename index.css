@@ -1,53 +1,55 @@
-/* Styling for the table */
-table {
-  border-collapse: collapse;
-  width: 100%;
+/* CSS for the registration form */
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
-table, th, td {
-  border: 1px solid black;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-}
-
-/* Styling for form layout */
 form {
   max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
-label {
+form label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
-input[type="checkbox"],
-button {
-  width: 100%;
-  padding: 8px;
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="date"],
+form input[type="checkbox"] {
+  width: calc(100% - 12px);
+  padding: 5px;
   margin-bottom: 10px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
 }
 
-button {
-  background-color: #4CAF50;
+form button {
+  padding: 8px 20px;
+  background-color: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-button:hover {
+form button:hover {
   background-color: #45a049;
+}
+
+/* CSS for the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
 }
