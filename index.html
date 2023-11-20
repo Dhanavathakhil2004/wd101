@@ -3,71 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration Form</title>
-  <script src="index.js" defer></script>
-  <style>
-    /* General styling for the form and table */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-}
-
-form {
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
-input[type="checkbox"] {
-  width: calc(100% - 12px);
-  padding: 8px;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: #45a049;
-}
-
-table {
-  margin-top: 20px;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-  </style>
 </head>
 <body>
   <form id="registrationForm">
@@ -108,51 +43,17 @@ th {
     </tbody>
   </table>
 
-  <!-- JavaScript to handle form submission -->
+  <!-- JavaScript to handle form submission and store data in localStorage -->
   <script>
-    // Function to save form data to localStorage
-    function saveFormData(name, email, password, dob, acceptedTerms) {
-      const entry = { name, email, password, dob, acceptedTerms };
-      let entries = JSON.parse(localStorage.getItem('entries')) || [];
-      entries.push(entry);
-      localStorage.setItem('entries', JSON.stringify(entries));
-    }
-
-    // Function to load form data from localStorage
-    function loadFormData() {
-      const entries = JSON.parse(localStorage.getItem('entries')) || [];
-      const tableBody = document.querySelector('#entries tbody');
-
-      tableBody.innerHTML = ''; // Clear existing entries before re-rendering
-
-      entries.forEach(entry => {
-        const newRow = tableBody.insertRow();
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        const cell3 = newRow.insertCell(2);
-        const cell4 = newRow.insertCell(3);
-        const cell5 = newRow.insertCell(4);
-
-        cell1.textContent = entry.name;
-        cell2.textContent = entry.email;
-        cell3.textContent = entry.password;
-        cell4.textContent = entry.dob;
-        cell5.textContent = entry.acceptedTerms ? 'Yes' : 'No';
-      });
-    }
-
-    // Load existing form data when the page loads
-    document.addEventListener('DOMContentLoaded', loadFormData);
-
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
       // Gather form data
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const dob = document.getElementById('dob').value;
-      const acceptedTerms = document.getElementById('acceptedTerms').checked;
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const dob = document.getElementById("dob").value;
+      const acceptedTerms = document.getElementById("acceptedTerms").checked;
 
       // Validate age
       const today = new Date();
@@ -166,21 +67,64 @@ th {
       // Validate age and email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (age < 18 || age > 55) {
-        alert('Age should be between 18 and 55 years old.');
+        alert("Age should be between 18 and 55 years old.");
       } else if (!emailRegex.test(email)) {
-        alert('Invalid email address.');
+        alert("Invalid email address.");
       } else {
-        // Save form data to localStorage
-        saveFormData(name, email, password, dob, acceptedTerms);
+        // Create a new table row with the form data
+        const table = document.getElementById("entries").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+        const cell5 = newRow.insertCell(4);
 
-        // Reload table with updated form data
-        loadFormData();
+        cell1.textContent = name;
+        cell2.textContent = email;
+        cell3.textContent = password;
+        cell4.textContent = dob;
+        cell5.textContent = acceptedTerms ? "Yes" : "No";
+
+        // Store form data in localStorage
+        let entries = JSON.parse(localStorage.getItem('entries')) || [];
+        entries.push({ name, email, password, dob, acceptedTerms });
+        localStorage.setItem('entries', JSON.stringify(entries));
 
         // Reset the form after submission
-        document.getElementById('registrationForm').reset();
+        document.getElementById("registrationForm").reset();
+
+        // Reload the table with updated data from localStorage
+        loadEntriesFromStorage();
       }
     });
+
+    // Function to load entries from localStorage and populate the table
+    function loadEntriesFromStorage() {
+      const table = document.getElementById("entries").getElementsByTagName("tbody")[0];
+      table.innerHTML = '';
+
+      const entries = JSON.parse(localStorage.getItem('entries')) || [];
+      entries.forEach(entry => {
+        const newRow = table.insertRow();
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+        const cell5 = newRow.insertCell(4);
+
+        cell1.textContent = entry.name;
+        cell2.textContent = entry.email;
+        cell3.textContent = entry.password;
+        cell4.textContent = entry.dob;
+        cell5.textContent = entry.acceptedTerms ? "Yes" : "No";
+      });
+    }
+
+    // Load existing data from localStorage when the page loads
+    loadEntriesFromStorage();
   </script>
 </body>
 </html>
+
 
