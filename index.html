@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration</title>
+</head>
+<body>
+  <form id="registrationForm">
+    <table id="userData">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Dob</th>
+          <th>Accepted terms?</th>
+        </tr>
+      </thead>
+      <tbody></tbody> <!-- This tbody will initially be empty -->
+    </table>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br><br>
+    
+    <label for="dob">DOB:</label>
+    <input type="date" id="dob" name="dob"><br><br>
+    
+    <label for="acceptedTerms">Accepted terms?</label>
+    <input type="checkbox" id="acceptedTerms" name="acceptedTerms"><br><br>
+    
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
