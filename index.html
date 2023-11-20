@@ -6,6 +6,7 @@
 </head>
 <body>
   <form id="registrationForm">
+    <!-- Form inputs with required IDs -->
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required><br><br>
 
@@ -21,12 +22,15 @@
     <label for="acceptedTerms">Accepted terms?</label>
     <input type="checkbox" id="acceptedTerms" name="acceptedTerms" required><br><br>
 
+    <!-- Submit button -->
     <button type="submit">Submit</button>
   </form>
 
+  <!-- Table element -->
   <table id="entries">
     <thead>
       <tr>
+        <!-- Table header with specified columns -->
         <th>Name</th>
         <th>Email</th>
         <th>Password</th>
@@ -39,6 +43,7 @@
     </tbody>
   </table>
 
+  <!-- JavaScript to handle form submission -->
   <script>
     document.getElementById("registrationForm").addEventListener("submit", function(event) {
       event.preventDefault();
@@ -50,7 +55,7 @@
       const dob = document.getElementById("dob").value;
       const acceptedTerms = document.getElementById("acceptedTerms").checked;
 
-      // Validate age (assuming today's date is used)
+      // Validate age
       const today = new Date();
       const birthDate = new Date(dob);
       const age = today.getFullYear() - birthDate.getFullYear();
@@ -59,37 +64,32 @@
         age--;
       }
 
+      // Validate age and email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (age < 18 || age > 55) {
         alert("Age should be between 18 and 55 years old.");
-        return;
-      }
-
-      // Validate email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      } else if (!emailRegex.test(email)) {
         alert("Invalid email address.");
-        return;
+      } else {
+        // Create a new table row with the form data
+        const table = document.getElementById("entries").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+        const cell5 = newRow.insertCell(4);
+
+        cell1.textContent = name;
+        cell2.textContent = email;
+        cell3.textContent = password;
+        cell4.textContent = dob;
+        cell5.textContent = acceptedTerms ? "Yes" : "No";
+
+        // Reset the form after submission
+        document.getElementById("registrationForm").reset();
       }
-
-      // Create a new table row with the form data
-      const table = document.getElementById("entries").getElementsByTagName("tbody")[0];
-      const newRow = table.insertRow();
-      const cell1 = newRow.insertCell(0);
-      const cell2 = newRow.insertCell(1);
-      const cell3 = newRow.insertCell(2);
-      const cell4 = newRow.insertCell(3);
-      const cell5 = newRow.insertCell(4);
-
-      cell1.innerHTML = name;
-      cell2.innerHTML = email;
-      cell3.innerHTML = password;
-      cell4.innerHTML = dob;
-      cell5.innerHTML = acceptedTerms ? "Yes" : "No";
-
-      // Reset the form after submission
-      document.getElementById("registrationForm").reset();
     });
   </script>
 </body>
 </html>
-
