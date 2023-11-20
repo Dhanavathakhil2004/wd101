@@ -3,6 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration Form</title>
+  <style>
+    /* CSS for the registration form */
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="date"],
+form input[type="checkbox"] {
+  width: calc(100% - 12px);
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+form button {
+  padding: 8px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+/* CSS for the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+  </style>
 </head>
 <body>
   <form id="registrationForm">
