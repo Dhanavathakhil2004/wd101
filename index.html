@@ -1,189 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>Registration Form</title>
-  <script src="index.js" defer></script>
-  <style>
-    /* CSS for the registration form */
-body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
-
-form {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-form label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form input[type="date"],
-form input[type="checkbox"] {
-  width: calc(100% - 12px);
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-form button {
-  padding: 8px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #45a049;
-}
-
-/* CSS for the table */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 20px;
-}
-
-table th,
-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-table th {
-  background-color: #f2f2f2;
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        input#name:invalid:focus,
+        input#email:invalid:focus,
+        input#dob:invalid:focus {
+            border: 1px solid red;
+        }
+    </style>
 </head>
-<body>
-  <form id="registrationForm">
-    <!-- Form inputs with required IDs -->
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br><br>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <div class="container bg-white shadow-xl rounded-sm w-full sm:w-96 py-6 mb-5">
+        <form id="user-form" class="w-full px-4 sm:px-8">
+            <h1 class="text-2xl font-bold text-center mb-5">Registration Form</h1>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+            <div class="flex flex-col space-y-4">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required class="border p-2 rounded-md">
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required><br><br>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required class="border p-2 rounded-md">
 
-    <label for="acceptedTerms">Accepted terms?</label>
-    <input type="checkbox" id="acceptedTerms" name="acceptedTerms" required><br><br>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required class="border p-2 rounded-md">
 
-    <!-- Submit button -->
-    <button type="submit">Submit</button>
-  </form>
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required class="border p-2 rounded-md">
 
-  <!-- Table element -->
-  <table id="entries">
-    <thead>
-      <tr>
-        <!-- Table header with specified columns -->
-        <th>Name</th>
-        <th>Email</th>
-        <th>Password</th>
-        <th>Dob</th>
-        <th>Accepted terms?</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Entries will be populated dynamically after form submission -->
-    </tbody>
-  </table>
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="t&c" name="t&c">
+                    <label for="t&c">Accept Terms & Conditions</label>
+                </div>
 
-  <!-- JavaScript to handle form submission and store data in localStorage -->
-  <script>
-    document.getElementById("registrationForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+                <button type="submit" class="w-full bg-green-500 text-white border-none rounded-md p-2 mt-4">Submit</button>
+            </div>
+        </form>
+    </div>
 
-      // Gather form data
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const dob = document.getElementById("dob").value;
-      const acceptedTerms = document.getElementById("acceptedTerms").checked;
+    <div class="entries bg-white shadow-lg rounded-lg w-full sm:w-150 p-6">
+        <div class="mx-auto">
+            <h2 class="flex font-bold text-2xl justify-center align-middle">Entries</h2>
+            <div id="user-entries">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Dob</th>
+                            <th>Accepted terms?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-      // Validate age
-      const today = new Date();
-      const birthDate = new Date(dob);
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-      // Validate age and email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (age < 18 || age > 55) {
-        alert("Age should be between 18 and 55 years old.");
-      } else if (!emailRegex.test(email)) {
-        alert("Invalid email address.");
-      } else {
-        // Create a new table row with the form data
-        const table = document.getElementById("entries").getElementsByTagName("tbody")[0];
-        const newRow = table.insertRow();
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        const cell3 = newRow.insertCell(2);
-        const cell4 = newRow.insertCell(3);
-        const cell5 = newRow.insertCell(4);
-
-        cell1.textContent = name;
-        cell2.textContent = email;
-        cell3.textContent = password;
-        cell4.textContent = dob;
-        cell5.textContent = acceptedTerms ? "Yes" : "No";
-
-        // Store form data in localStorage
-        let entries = JSON.parse(localStorage.getItem('entries')) || [];
-        entries.push({ name, email, password, dob, acceptedTerms });
-        localStorage.setItem('entries', JSON.stringify(entries));
-
-        // Reset the form after submission
-        document.getElementById("registrationForm").reset();
-
-        // Reload the table with updated data from localStorage
-        loadEntriesFromStorage();
-      }
-    });
-
-    // Function to load entries from localStorage and populate the table
-    function loadEntriesFromStorage() {
-      const table = document.getElementById("entries").getElementsByTagName("tbody")[0];
-      table.innerHTML = '';
-
-      const entries = JSON.parse(localStorage.getItem('entries')) || [];
-      entries.forEach(entry => {
-        const newRow = table.insertRow();
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        const cell3 = newRow.insertCell(2);
-        const cell4 = newRow.insertCell(3);
-        const cell5 = newRow.insertCell(4);
-
-        cell1.textContent = entry.name;
-        cell2.textContent = entry.email;
-        cell3.textContent = entry.password;
-        cell4.textContent = entry.dob;
-        cell5.textContent = entry.acceptedTerms ? "Yes" : "No";
-      });
-    }
-
-    // Load existing data from localStorage when the page loads
-    loadEntriesFromStorage();
-  </script>
+    <script src="./index.js"></script>
 </body>
+
 </html>
+
 
 
