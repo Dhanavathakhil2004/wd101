@@ -41,15 +41,72 @@
       <!-- User entries will appear here -->
     </tbody>
   </table>
-    <script src="index.js"></script>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('registrationForm');
+      const tableBody = document.querySelector('#userTable tbody');
 
-  
-    
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Gather form data
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const dob = document.getElementById('dob').value;
+        const terms = document.getElementById('terms').checked ? 'Yes' : 'No';
+
+        // Validate email and age
+        const isValidEmail = validateEmail(email);
+        const age = calculateAge(dob);
+
+        if (!isValidEmail) {
+          alert('Please enter a valid email address.');
+          return;
+        }
+
+        if (age < 18 || age > 55) {
+          alert('Age must be between 18 and 55.');
+          return;
+        }
+
+        // Add entry to the table
+        const newRow = tableBody.insertRow();
+        newRow.innerHTML = `
+          <td>${name}</td>
+          <td>${email}</td>
+          <td>${password}</td>
+          <td>${dob}</td>
+          <td>${terms}</td>
+        `;
+
+        // Clear form fields after submission
+        form.reset();
+      });
+
+      function validateEmail(email) {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      }
+
+      function calculateAge(dob) {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+
+        return age;
+      }
+    });
+  </script>
 
 </body>
 </html>
-
 
 
 
